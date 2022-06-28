@@ -6,13 +6,7 @@ Class는 변수의 타입도 체크하고, 인스턴스 생성도 가능
 Interface는 변수의 타입만을 체크!!
 */
 
-export interface CreateBoard {
-  title: string;
-  description: string;
-  status: BoardStatus;
-}
-
-export interface Board {
+export class Board {
   id: string;
   title: string;
   description: string;

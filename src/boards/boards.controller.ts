@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { Board, BoardStatus, CreateBoard } from './board.model';
+import { Board } from './board.model';
 import { BoardsService } from './boards.service';
+import { CreateBoardDto } from './dto/create-board.dto';
 
 @Controller('boards')
 export class BoardsController {
@@ -14,12 +15,8 @@ export class BoardsController {
   }
 
   @Post('/')
-  createBoard(
-    @Body('title') title: string,
-    @Body('description') description: string,
-    @Body('boardStatus') status: BoardStatus,
-  ) {
-    return this.boardsService.createBoard(title, description, status);
+  createBoard(@Body('createBoardDto') createBoardDto: CreateBoardDto) {
+    return this.boardsService.createBoard(createBoardDto);
   }
 }
 
@@ -43,4 +40,7 @@ DB에서 데이터를 얻어 Service나 Controller 등으로 보낼 때 사용�
 
 DTO는 데이터가 네트워크를 통해 전송되는 방법을 정의하는 객체
 interface나 class를 이용해 정의
+
+DTO를 사용하는 이유
+- 데이터 유효성을 체크하는데 효율적, 더 안정적인 코드로 만들어준다.
 */
