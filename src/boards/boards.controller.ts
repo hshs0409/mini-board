@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Board } from './board.model';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { UpdateBoardDto } from './dto/update-board-dto';
 
 @Controller('boards')
 export class BoardsController {
@@ -23,6 +32,20 @@ export class BoardsController {
   getBoardById(@Param('id') id: string): Board {
     // 여러가지 Param가 존재하면 배열로 들어온다.
     return this.boardsService.getBoardById(id);
+  }
+
+  @Delete('/:id')
+  deleteBoard(@Param('id') id: string) {
+    return this.boardsService.deleteBoard(id);
+  }
+
+  @Patch('/:id/status')
+  updateBoardStatus(
+    @Param('id') id: string,
+    @Body('status') status: BoardStatus,
+  ) {
+    const updateBoardDto: UpdateBoardDto = { id, status };
+    return this.boardsService.updateBoardStatus(updateBoardDto);
   }
 }
 
