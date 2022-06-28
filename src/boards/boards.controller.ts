@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Board } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -17,6 +17,12 @@ export class BoardsController {
   @Post('/')
   createBoard(@Body('createBoardDto') createBoardDto: CreateBoardDto) {
     return this.boardsService.createBoard(createBoardDto);
+  }
+
+  @Get('/:id')
+  getBoardById(@Param('id') id: string): Board {
+    // 여러가지 Param가 존재하면 배열로 들어온다.
+    return this.boardsService.getBoardById(id);
   }
 }
 

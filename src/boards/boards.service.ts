@@ -34,4 +34,8 @@ export class BoardsService {
     this.boards.push(board);
     return board; // 어떤 Board가 Created인지 정보 Return
   }
+
+  getBoardById(id: string): Board {
+    return this.boards.find((board) => board.id === id);
+  }
 }
