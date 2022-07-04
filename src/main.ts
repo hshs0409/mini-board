@@ -46,5 +46,16 @@ ValidationPipe, ParseIntPipe, ParseBoolPipe, ParseArrayPipe, ParseUUIDPipe, Defa
 파이프를 이용한 유효성 체크
 class-validator, class-transformer
 
+커스텀 파이프 구현
+
+PipeTransform이란 인터페이스를 새롭게 만들 커스텀 파이프에 구현
+
+transform() 메소드가 필요
+
+transform() 메소드
+value, metadata 파라미터가 있는데 
+value = 처리가 된 인자의 값
+metadata = 인자에 대한 메타데이터를 포함한 객체
+
 */
 bootstrap();

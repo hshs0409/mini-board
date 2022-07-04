@@ -13,6 +13,7 @@ import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardStatusDto } from './dto/update-board-status-dto';
+import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
 @Controller('boards')
 export class BoardsController {
@@ -45,7 +46,7 @@ export class BoardsController {
   @Patch('/:id/status')
   updateBoardStatus(
     @Param('id') id: string,
-    @Body('status') status: BoardStatus,
+    @Body('status', BoardStatusValidationPipe) status: BoardStatus, // 파라미터 레벨에서 파이프 사용
   ) {
     const updateBoardStatusDto: UpdateBoardStatusDto = { id, status };
     return this.boardsService.updateBoardStatus(updateBoardStatusDto);
