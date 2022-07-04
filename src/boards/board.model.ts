@@ -22,13 +22,16 @@ export enum ImpossibleEnum {
   PUBLIC = 0,
   PRIVATE = 1,
 }
+
 export enum ImpossibleEnum2 {
   PUBLIC = 3,
-  PRIVATE,
+  PRIVATE, //4
+  prd, //5
 }
 
 let impossibleStatus: ImpossibleEnum = ImpossibleEnum.PRIVATE;
-impossibleStatus = 5;
+console.log(impossibleStatus); //1
+impossibleStatus = 5; // 1
 
 let impossibleStatus2: ImpossibleEnum2 = ImpossibleEnum2.PUBLIC;
 let impossibleStatus2p: ImpossibleEnum2 = ImpossibleEnum2.PRIVATE;

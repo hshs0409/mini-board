@@ -10,7 +10,7 @@ import {
 import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
-import { UpdateBoardDto } from './dto/update-board-dto';
+import { UpdateBoardStatusDto } from './dto/update-board-status-dto';
 
 @Controller('boards')
 export class BoardsController {
@@ -44,8 +44,8 @@ export class BoardsController {
     @Param('id') id: string,
     @Body('status') status: BoardStatus,
   ) {
-    const updateBoardDto: UpdateBoardDto = { id, status };
-    return this.boardsService.updateBoardStatus(updateBoardDto);
+    const updateBoardStatusDto: UpdateBoardStatusDto = { id, status };
+    return this.boardsService.updateBoardStatus(updateBoardStatusDto);
   }
 }
 
