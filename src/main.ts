@@ -44,6 +44,7 @@ Global level Pipe
 ValidationPipe, ParseIntPipe, ParseBoolPipe, ParseArrayPipe, ParseUUIDPipe, DefaultValuePipe
 
 파이프를 이용한 유효성 체크
+class-validator, class-transformer
 
 */
 bootstrap();
