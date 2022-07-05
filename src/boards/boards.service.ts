@@ -52,7 +52,11 @@ export class BoardsService {
   async deleteBoard(id: number): Promise<void> {
     const result = await this.boardRepository.delete(id);
 
-    console.log(result);
+    if (result.affected === 0) {
+      throw new NotFoundException(
+        `해당하는 id : ${id}의 게시물을 삭제할 수 없습니다.`,
+      );
+    }
   }
 
   // deleteBoard(id: string): void {

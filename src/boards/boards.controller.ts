@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   UsePipes,
   ValidationPipe,
@@ -32,6 +34,12 @@ export class BoardsController {
   getBoardById(@Param('id') id: number): Promise<Board> {
     // 여러가지 Param가 존재하면 배열로 들어온다.
     return this.boardsService.getBoardById(id);
+  }
+
+  @Delete('/:id')
+  deleteBoard(@Param('id', ParseIntPipe) id): Promise<void> {
+    // ParseIntPipe : parameter check해주는 Pipe
+    return this.boardsService.deleteBoard(id);
   }
 
   // @Delete('/:id')
