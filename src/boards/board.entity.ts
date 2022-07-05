@@ -9,6 +9,7 @@ export class Board extends BaseEntity {
 
   @Column()
   title: string;
+
   @Column()
   description: string;
 

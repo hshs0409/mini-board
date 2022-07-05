@@ -4,6 +4,7 @@ import { BoardRepository } from './board.repository';
 import { Board } from './board.entity';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { Repository } from 'typeorm';
+import { UpdateBoardStatusDto } from './dto/update-board-status-dto';
 
 /**
  Service
@@ -41,14 +42,6 @@ export class BoardsService {
     return found;
   }
 
-  // getBoardById(id: string): Board {
-  //   const found = this.boards.find((board) => board.id === id);
-  //   if (!found) {
-  //     throw new NotFoundException(`해당하는 id : ${id}를 찾을 수 없습니다.`);
-  //   }
-  //   return found;
-  // }
-
   async deleteBoard(id: number): Promise<void> {
     const result = await this.boardRepository.delete(id);
 
@@ -59,15 +52,15 @@ export class BoardsService {
     }
   }
 
-  // deleteBoard(id: string): void {
-  //   const found = this.getBoardById(id);
-  //   this.boards = this.boards.filter((board) => board.id !== found.id);
-  //   return;
-  // }
-  // updateBoardStatus(updateBoardStatusDto: UpdateBoardStatusDto): Board {
-  //   const { id, status } = updateBoardStatusDto;
-  //   const board = this.getBoardById(id);
-  //   board.status = status;
-  //   return board;
-  // }
+  async updateBoardStatus(
+    updateBoardStatusDto: UpdateBoardStatusDto,
+  ): Promise<Board> {
+    const { id, status } = updateBoardStatusDto;
+
+    const board = await this.getBoardById(id);
+    board.status = status;
+    await this.boardRepository.save(board);
+
+    return board;
+  }
 }
