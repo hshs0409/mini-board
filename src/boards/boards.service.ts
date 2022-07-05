@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { BoardRepository } from './board.repository';
 import { Board } from './board.entity';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { Repository } from 'typeorm';
 
 /**
  Service
@@ -21,20 +22,13 @@ export class BoardsService {
     @InjectRepository(Board)
     private boardRepository: Repository<Board>,
   ) {}
-  // getAllBoards(): Board[] {
-  //   return this.boardRepository;
-  // }
-  async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
-    const { title, description, status } = createBoardDto;
 
-    const board: Board = this.boardRepository.create({
-      title,
-      description,
-      status,
-    });
-    await this.boardRepository.save(board);
+  async getAllBoards(): Promise<Board[]> {
+    return await this.boardRepository.find();
+  }
 
-    return board; // 어떤 Board가 Created인지 정보 Return
+  createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+    return BoardRepository.createBoard(createBoardDto);
   }
 
   async getBoardById(id: number): Promise<Board> {
@@ -54,6 +48,13 @@ export class BoardsService {
   //   }
   //   return found;
   // }
+
+  async deleteBoard(id: number): Promise<void> {
+    const result = await this.boardRepository.delete(id);
+
+    console.log(result);
+  }
+
   // deleteBoard(id: string): void {
   //   const found = this.getBoardById(id);
   //   this.boards = this.boards.filter((board) => board.id !== found.id);

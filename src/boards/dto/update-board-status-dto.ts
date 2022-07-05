@@ -1,4 +1,4 @@
-import { BoardStatus } from '../board.model';
+import { BoardStatus } from '../board.entity';
 
 export class UpdateBoardStatusDto {
   // Mapped Types 공부 후 코드 개선
