@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { BoardsModule } from './boards/boards.module';
+import { typeORMConfig } from './configs/typeorm.config';
 
 /*
 Nest JS 모듈이란?
@@ -16,6 +18,6 @@ Nest가 애플리케이션 구조를 구성하는데 사용하는 메타 데이�
 클래스 위의 함수이고, 클래스를 위해 움직인다.
  */
 @Module({
-  imports: [BoardsModule],
+  imports: [TypeOrmModule.forRoot(typeORMConfig), BoardsModule],
 })
 export class AppModule {}
