@@ -6,12 +6,12 @@ Class는 변수의 타입도 체크하고, 인스턴스 생성도 가능
 Interface는 변수의 타입만을 체크!!
 */
 
-export class Board {
-  id: string;
-  title: string;
-  description: string;
-  status: BoardStatus;
-}
+// export class Board {
+//   id: string;
+//   title: string;
+//   description: string;
+//   status: BoardStatus;
+// }
 
 export enum EBoardStatus {
   PUBLIC = 'PUBLIC',
@@ -39,8 +39,6 @@ console.log(impossibleStatus2); // 3
 console.log(impossibleStatus2p); // 4
 impossibleStatus2 = 5;
 console.log(impossibleStatus2); // 5
-
-export type BoardStatus = 'PUBLIC' | 'PRIVATE';
 
 // Union Types : OR
 // 발생하는 모든 케이스 중 하나만 할당할 때

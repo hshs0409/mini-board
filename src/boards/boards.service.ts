@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Board } from './board.model';
-import { v1 as uuid } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Board } from './board.entity';
 import { CreateBoardDto } from './dto/create-board.dto';
-import { UpdateBoardStatusDto } from './dto/update-board-status-dto';
 
 /**
  Service
@@ -17,45 +17,52 @@ Service를 Controller에서 이용하기 위한 방법 => DI(Dependency Injectio
 
 @Injectable()
 export class BoardsService {
-  private boards: Board[] = [];
-
-  getAllBoards(): Board[] {
-    return this.boards;
-  }
-
-  createBoard(createBoardDto: CreateBoardDto) {
+  constructor(
+    @InjectRepository(Board)
+    private boardRepository: Repository<Board>,
+  ) {}
+  // getAllBoards(): Board[] {
+  //   return this.boardRepository;
+  // }
+  async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
     const { title, description, status } = createBoardDto;
-    const board: Board = {
-      id: uuid(),
+
+    const board: Board = this.boardRepository.create({
       title,
       description,
       status,
-    };
+    });
+    await this.boardRepository.save(board);
 
-    this.boards.push(board);
     return board; // 어떤 Board가 Created인지 정보 Return
   }
 
-  getBoardById(id: string): Board {
-    const found = this.boards.find((board) => board.id === id);
+  async getBoardById(id: number): Promise<Board> {
+    const found = await this.boardRepository.findOneBy({
+      id,
+    });
     if (!found) {
       throw new NotFoundException(`해당하는 id : ${id}를 찾을 수 없습니다.`);
     }
     return found;
   }
 
-  deleteBoard(id: string): void {
-    const found = this.getBoardById(id);
-    this.boards = this.boards.filter((board) => board.id !== found.id);
-    return;
-  }
-
-  updateBoardStatus(updateBoardStatusDto: UpdateBoardStatusDto): Board {
-    const { id, status } = updateBoardStatusDto;
-
-    const board = this.getBoardById(id);
-    board.status = status;
-
-    return board;
-  }
+  // getBoardById(id: string): Board {
+  //   const found = this.boards.find((board) => board.id === id);
+  //   if (!found) {
+  //     throw new NotFoundException(`해당하는 id : ${id}를 찾을 수 없습니다.`);
+  //   }
+  //   return found;
+  // }
+  // deleteBoard(id: string): void {
+  //   const found = this.getBoardById(id);
+  //   this.boards = this.boards.filter((board) => board.id !== found.id);
+  //   return;
+  // }
+  // updateBoardStatus(updateBoardStatusDto: UpdateBoardStatusDto): Board {
+  //   const { id, status } = updateBoardStatusDto;
+  //   const board = this.getBoardById(id);
+  //   board.status = status;
+  //   return board;
+  // }
 }

@@ -1,19 +1,6 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
-import { Board, BoardStatus } from './board.model';
+import { Controller, Get, Param } from '@nestjs/common';
+import { Board } from './board.entity';
 import { BoardsService } from './boards.service';
-import { CreateBoardDto } from './dto/create-board.dto';
-import { UpdateBoardStatusDto } from './dto/update-board-status-dto';
-import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
 @Controller('boards')
 export class BoardsController {
@@ -21,36 +8,36 @@ export class BoardsController {
   constructor(private boardsService: BoardsService) {}
 
   // 꼭 데코레이터도 함께 작성
-  @Get('/')
-  getAllBoard(): Board[] {
-    return this.boardsService.getAllBoards();
-  }
+  // @Get('/')
+  // getAllBoard(): Board[] {
+  //   return this.boardsService.getAllBoards();
+  // }
 
-  @Post('/')
-  @UsePipes(ValidationPipe)
-  createBoard(@Body() createBoardDto: CreateBoardDto) {
-    return this.boardsService.createBoard(createBoardDto);
-  }
+  // @Post('/')
+  // @UsePipes(ValidationPipe)
+  // createBoard(@Body() createBoardDto: CreateBoardDto) {
+  //   return this.boardsService.createBoard(createBoardDto);
+  // }
 
   @Get('/:id')
-  getBoardById(@Param('id') id: string): Board {
+  getBoardById(@Param('id') id: number): Promise<Board> {
     // 여러가지 Param가 존재하면 배열로 들어온다.
     return this.boardsService.getBoardById(id);
   }
 
-  @Delete('/:id')
-  deleteBoard(@Param('id') id: string) {
-    return this.boardsService.deleteBoard(id);
-  }
+  // @Delete('/:id')
+  // deleteBoard(@Param('id') id: string) {
+  //   return this.boardsService.deleteBoard(id);
+  // }
 
-  @Patch('/:id/status')
-  updateBoardStatus(
-    @Param('id') id: string,
-    @Body('status', BoardStatusValidationPipe) status: BoardStatus, // 파라미터 레벨에서 파이프 사용
-  ) {
-    const updateBoardStatusDto: UpdateBoardStatusDto = { id, status };
-    return this.boardsService.updateBoardStatus(updateBoardStatusDto);
-  }
+  // @Patch('/:id/status')
+  // updateBoardStatus(
+  //   @Param('id') id: string,
+  //   @Body('status', BoardStatusValidationPipe) status: BoardStatus, // 파라미터 레벨에서 파이프 사용
+  // ) {
+  //   const updateBoardStatusDto: UpdateBoardStatusDto = { id, status };
+  //   return this.boardsService.updateBoardStatus(updateBoardStatusDto);
+  // }
 }
 
 /*

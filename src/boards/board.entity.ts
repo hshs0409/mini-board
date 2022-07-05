@@ -1,5 +1,6 @@
 import { BaseEntity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { BoardStatus } from './board.model';
+
+export type BoardStatus = 'PUBLIC' | 'PRIVATE';
 
 export class Board extends BaseEntity {
   @PrimaryGeneratedColumn()
