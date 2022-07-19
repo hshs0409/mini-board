@@ -4,6 +4,7 @@ import {
   getRepositoryToken,
   TypeOrmModule,
 } from '@nestjs/typeorm';
+import { AuthModule } from 'src/auth/auth.module';
 import { DataSource } from 'typeorm';
 import { Board } from './board.entity';
 import { customBoardRepository } from './board.repository';
@@ -21,7 +22,7 @@ module 파일에서 등록
  */
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Board])],
+  imports: [TypeOrmModule.forFeature([Board]), AuthModule],
   controllers: [BoardsController],
   providers: [
     {

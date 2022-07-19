@@ -4,6 +4,7 @@ import { BoardRepository } from './board.repository';
 import { Board } from './board.entity';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardStatusDto } from './dto/update-board-status-dto';
+import { User } from 'src/auth/user.entity';
 
 /**
  Service
@@ -27,8 +28,8 @@ export class BoardsService {
     return await this.boardRepository.find();
   }
 
-  createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
-    return this.boardRepository.createBoard(createBoardDto);
+  createBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
+    return this.boardRepository.createBoard(createBoardDto, user);
   }
 
   async getBoardById(id: number): Promise<Board> {
