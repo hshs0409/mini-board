@@ -32,7 +32,7 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       // 유저 토큰 생성 ( Secret + Payload)
       const payload = { username };
-      const accessToken = await this.jwtService.sign(payload); // 알아서 secret key도 사용해줌
+      const accessToken = await this.jwtService.signAsync(payload); // 알아서 secret key도 사용해줌
       return { accessToken };
     } else {
       throw new UnauthorizedException('login failed');

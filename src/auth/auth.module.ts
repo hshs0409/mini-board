@@ -9,6 +9,7 @@ import {
 import { DataSource } from 'typeorm';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtStrategy } from './jwt.strategy';
 import { User } from './user.entity';
 import { customUserRepository } from './user.repository';
 
@@ -34,7 +35,9 @@ import { customUserRepository } from './user.repository';
       },
     },
     AuthService,
+    JwtStrategy,
   ],
+  exports: [JwtStrategy, PassportModule], // 다른 곳에서도 사용해야 하기 때문에
   controllers: [AuthController],
 })
 export class AuthModule {}
