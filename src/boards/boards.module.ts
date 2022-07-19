@@ -1,6 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import {
+  getDataSourceToken,
+  getRepositoryToken,
+  TypeOrmModule,
+} from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { Board } from './board.entity';
+import { customBoardRepository } from './board.repository';
 import { BoardsController } from './boards.controller';
 import { BoardsService } from './boards.service';
 
@@ -17,6 +23,15 @@ module 파일에서 등록
 @Module({
   imports: [TypeOrmModule.forFeature([Board])],
   controllers: [BoardsController],
-  providers: [BoardsService],
+  providers: [
+    {
+      provide: getRepositoryToken(Board),
+      inject: [getDataSourceToken()],
+      useFactory(dataSource: DataSource) {
+        return dataSource.getRepository(Board).extend(customBoardRepository);
+      },
+    },
+    BoardsService,
+  ],
 })
 export class BoardsModule {}

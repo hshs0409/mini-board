@@ -43,7 +43,6 @@ export class BoardsController {
   deleteBoard(@Param('id', ParseIntPipe) id): Promise<void> {
     // ParseIntPipe : parameter check해주는 Pipe
     return this.boardsService.deleteBoard(id);
-    ``;
   }
 
   @Patch('/:id/status')

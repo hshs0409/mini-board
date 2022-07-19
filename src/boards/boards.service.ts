@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BoardRepository } from './board.repository';
 import { Board } from './board.entity';
 import { CreateBoardDto } from './dto/create-board.dto';
-import { Repository } from 'typeorm';
 import { UpdateBoardStatusDto } from './dto/update-board-status-dto';
 
 /**
@@ -21,7 +20,7 @@ Service를 Controller에서 이용하기 위한 방법 => DI(Dependency Injectio
 export class BoardsService {
   constructor(
     @InjectRepository(Board)
-    private boardRepository: Repository<Board>,
+    private boardRepository: BoardRepository,
   ) {}
 
   async getAllBoards(): Promise<Board[]> {
@@ -29,7 +28,7 @@ export class BoardsService {
   }
 
   createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
-    return BoardRepository.createBoard(createBoardDto);
+    return this.boardRepository.createBoard(createBoardDto);
   }
 
   async getBoardById(id: number): Promise<Board> {
