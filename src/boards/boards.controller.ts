@@ -28,8 +28,8 @@ export class BoardsController {
 
   // 꼭 데코레이터도 함께 작성
   @Get('/')
-  getAllBoard(): Promise<Board[]> {
-    return this.boardsService.getAllBoards();
+  getAllBoard(@GetUser() user: User): Promise<Board[]> {
+    return this.boardsService.getAllBoards(user);
   }
 
   @Post('/')
@@ -48,9 +48,12 @@ export class BoardsController {
   }
 
   @Delete('/:id')
-  deleteBoard(@Param('id', ParseIntPipe) id): Promise<void> {
+  deleteBoard(
+    @Param('id', ParseIntPipe) id,
+    @GetUser() user: User,
+  ): Promise<void> {
     // ParseIntPipe : parameter check해주는 Pipe
-    return this.boardsService.deleteBoard(id);
+    return this.boardsService.deleteBoard(id, user);
   }
 
   @Patch('/:id/status')
